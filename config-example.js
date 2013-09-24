@@ -1,2 +1,27 @@
+/**
+ * Server's hostname.
+ *
+ * This name is used in the validated public data and must match what the
+ * clients think it is.
+ */
 exports.serverName = "pakdf.example.com";
+
+/**
+ * Reference to the server's RSA key.
+ */
 exports.rsa = require('./rsa.json');
+
+/**
+ * Domains this authentication server accepts cross-origin requests from.
+ */
+//exports.allowedDomains = ['ripple.com'];
+
+/**
+ * Whether to allow subdomains of the above.
+ */
+exports.allowSubdomainOrigin = true;
+
+/**
+ * Whether to allow origins that aren't using SSL.
+ */
+exports.allowNonSslOrigin = false;

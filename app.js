@@ -37,6 +37,7 @@ app.configure('production', function(){
   }, app);
 });
 
+app.options("/api/sign", api.cors);
 app.post('/api/sign', api.sign);
 
 server.listen(app.get('port'), function(){
