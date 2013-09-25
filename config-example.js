@@ -14,7 +14,7 @@ exports.rsa = require('./rsa.json');
 /**
  * Domains this authentication server accepts cross-origin requests from.
  */
-//exports.allowedDomains = ['ripple.com'];
+//exports.allowedOriginDomains = ['ripple.com'];
 
 /**
  * Whether to allow subdomains of the above.

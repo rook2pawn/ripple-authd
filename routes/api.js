@@ -16,8 +16,9 @@ function returnError(res, type, message) {
 
 function doCors(req, res)
 {
-  var origin = req.headers.Origin;
-  if (config.allowedOriginDomains &&
+  var origin = req.headers.origin;
+  if (origin &&
+      config.allowedOriginDomains &&
       Array.isArray(config.allowedOriginDomains)) {
     var allowed = false;
     var parsedUrl = url.parse(origin);
@@ -25,7 +26,7 @@ function doCors(req, res)
     config.allowedOriginDomains.forEach(function (domain) {
       if (config.allowSubdomainOrigin) {
         // Check if hostname ends with allowed domain
-        if (hostname.indexOf(domain, origin.length - domain.length) !== -1) {
+        if (hostname.indexOf(domain, hostname.length - domain.length) !== -1) {
           allowed = true;
         }
       } else {
