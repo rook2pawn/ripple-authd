@@ -71,7 +71,10 @@ exports.sign = function(req, res, next)
   }
   var data = {
     result: 'success',
-    signres: signres
+    signres: signres,
+    modulus: config.rsa.n,
+    alpha: config.rsa.a,
+    exponent: config.rsa.e
   };
   res.send(JSON.stringify(data));
 };
