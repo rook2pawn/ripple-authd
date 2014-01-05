@@ -43,6 +43,7 @@ function doCors(req, res)
     if (allowed) {
       res.header('Access-Control-Allow-Origin', origin);
       res.header('Access-Control-Allow-Methods', 'POST');
+      res.header('Access-Control-Allow-Headers', 'Content-Type');
     }
   }
 }
