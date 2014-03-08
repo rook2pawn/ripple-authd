@@ -67,7 +67,15 @@ exports.sign = function(req, res, next)
     }
     signres = signer.sign(""+req.body.info, ""+req.body.signreq);
   } catch (e) {
-    returnError(res, "internalError", e.message);
+    if (e && e.name === "UserError") {
+      returnError(res, "userError", e.message);
+    } else {
+      console.log('---');
+      if (e && e.stack) console.log(e.stack);
+      else console.log("Non-Error value thrown: "+e);
+
+      returnError(res, "internalError", "An internal server error occurred.");
+    }
     return;
   }
   var data = {
