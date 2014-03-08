@@ -41,5 +41,5 @@ app.options("/api/sign", api.cors);
 app.post('/api/sign', api.sign);
 
 server.listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+  console.log("Ripple authd listening on port " + app.get('port'));
 });
