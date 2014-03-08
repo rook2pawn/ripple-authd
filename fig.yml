@@ -1,0 +1,7 @@
+authd:
+  build: .
+  volumes:
+    - .:/srv/ripple/authd
+  command: supervisor -n exit server.js
+  ports:
+    - "23042:23042"
