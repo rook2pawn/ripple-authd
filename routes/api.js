@@ -24,7 +24,9 @@ function doCors(req, res)
     var parsedUrl = url.parse(origin);
     var hostname = parsedUrl.hostname;
     config.allowedOriginDomains.forEach(function (domain) {
-      if (config.allowSubdomainOrigin) {
+      if (domain === "*") {
+        allowed = true;
+      } else if (config.allowSubdomainOrigin) {
         // Check if hostname ends with allowed domain
         if (hostname.indexOf(domain, hostname.length - domain.length) !== -1) {
           allowed = true;

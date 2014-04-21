@@ -13,6 +13,12 @@ exports.rsa = require('./rsa.json');
 
 /**
  * Domains this authentication server accepts cross-origin requests from.
+ *
+ * exports.allowedOriginDomains = ['example.com', 'client.example.net'];
+ *
+ * You can allow requests from any origin using:
+ *
+ * exports.allowedOriginDomains = ['*'];
  */
 //exports.allowedOriginDomains = ['ripple.com'];
 
