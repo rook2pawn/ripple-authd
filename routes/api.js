@@ -1,9 +1,11 @@
+var response = require('response')
+var config = require('../config')
 
 var Signer = require('../lib/signer').Signer,
-    config = require('../config'),
     url    = require('url');
 
 var signer = new Signer();
+var testSigner = new Signer(require('../test.rsa.json'))
 
 function returnError(res, type, message) {
   var data = {
@@ -11,7 +13,7 @@ function returnError(res, type, message) {
     error: type,
     error_message: message
   };
-  res.send(JSON.stringify(data));
+  response.json(data).status(400).pipe(res)
 }
 
 function doCors(req, res)
@@ -57,17 +59,18 @@ exports.cors = function(req, res, next)
 
 exports.sign = function(req, res, next)
 {
-  doCors(req, res);
-
   var signres;
   try {
     if ("string" !== typeof req.body.info) {
       returnError(res, "missingInfo", "Public information is missing.");
+        return
     }
     if ("string" !== typeof req.body.signreq) {
       returnError(res, "missingSignreq", "Signature request is missing.");
+        return
     }
     signres = signer.sign(""+req.body.info, ""+req.body.signreq);
+    console.log(signres)
   } catch (e) {
     if (e && e.name === "UserError") {
       returnError(res, "userError", e.message);
@@ -87,5 +90,39 @@ exports.sign = function(req, res, next)
     alpha: config.rsa.a,
     exponent: config.rsa.e
   };
-  res.send(JSON.stringify(data));
+  response.json(data).pipe(res);
+};
+
+exports.test = function(req, res, next)
+{
+  var signres;
+  try {
+    if ("string" !== typeof req.body.info) {
+      returnError(res, "missingInfo", "Public information is missing.");
+        return
+    }
+    if ("string" !== typeof req.body.signreq) {
+      returnError(res, "missingSignreq", "Signature request is missing.");
+        return
+    }
+    signres = testSigner.test(""+req.body.info, ""+req.body.signreq);
+    console.log(signres)
+  } catch (e) {
+    if (e && e.name === "UserError") {
+      returnError(res, "userError", e.message);
+    } else {
+      console.log('---');
+      if (e && e.stack) console.log(e.stack);
+      else console.log("Non-Error value thrown: "+e);
+
+      returnError(res, "internalError", "An internal server error occurred.");
+    }
+    return;
+  }
+  var data = {
+    result: 'success',
+    signres: signres,
+    test:true
+  };
+  response.json(data).pipe(res);
 };
